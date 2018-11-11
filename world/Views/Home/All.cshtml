@@ -7,8 +7,14 @@
 </head>
 <body>
     <h1>Home</h1>
-<div>
-    <input name="countryInput" />
-</div>
+    <table>
+        @foreach (var country in @Model)
+        {
+            <tr>
+                <td>@country.Name</td>
+                <td>@country.Capital</td>
+            </tr>
+        }
+    </table>
 </body>
 </html>

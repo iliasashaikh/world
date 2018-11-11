@@ -30,6 +30,11 @@ namespace world
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    RequestPath = "/node_modules",
+            //    FileProvider = env.ContentRootFileProvider
+            //});
             app.UseMvc(ConfigureRoutes);
 
             app.Run(async (context) =>
@@ -44,15 +49,14 @@ namespace world
             // map defaults
             routeBuilder.MapRoute("default", "{controller=home}/{action=index}/{name?}");
 
-
             // map specific with anon type
             routeBuilder.MapRoute(
-                name:"login",
-                template:"login",
+                name: "login",
+                template: "login/{*details}",
                 defaults: new
                 {
-                    controller="Login",
-                    action="Login"
+                    controller = "Login",
+                    action = "Login"
                 });
 
             // map catch all

@@ -8,7 +8,7 @@ namespace world.Controllers
 {
     public class LoginController : Controller
     {
-        public IActionResult Login()
+        public IActionResult Login(string rest)
         {
             return View();
         }

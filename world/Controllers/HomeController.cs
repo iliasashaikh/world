@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using world.Models;
 
 namespace world.Controllers
 {
@@ -16,14 +20,30 @@ namespace world.Controllers
             _env = env;
         }
 
-        public IActionResult Index()
+        public IActionResult All()
         {
-            return View(_env);
+            var contentRoot = _env.ContentRootFileProvider;
+            var countriesFi = contentRoot.GetFileInfo("Data/countries.json");
+            var countriesStream = countriesFi.CreateReadStream();
+            var countries = new StreamReader(countriesStream).ReadToEnd();
+
+            var countryList = JsonConvert.DeserializeObject<List<Country>>(countries);
+
+            //return new ObjectResult(countryList);
+
+            return View(countryList);
         }
 
-        public IActionResult View(string country)
+        [HttpGet]
+        public IActionResult Index()
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(string country)
+        {
+            return View();
         }
 
         // india/map
