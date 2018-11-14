@@ -1,4 +1,4 @@
-﻿@model List<world.Models.Country>
+﻿@model world.Models.Country
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,7 +8,17 @@
 <body>
     <h1>Home</h1>
 <div>
-    <input name="countryInput" />
+    <form asp-action="Index" asp-controller="Home">
+        <label asp-for="Name"></label>
+        <input asp-for="Name"/>
+        <button type="submit">Submit</button>
+        <p>
+            @if (@Model != null)
+            {
+                <label asp-for="Capital">@Model.Capital</label>
+            }
+        </p>
+    </form>
 </div>
 </body>
 </html>

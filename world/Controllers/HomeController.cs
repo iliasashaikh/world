@@ -22,16 +22,22 @@ namespace world.Controllers
 
         public IActionResult All()
         {
+            List<Country> countryList = GetAllCountries();
+
+            //return new ObjectResult(countryList);
+
+            return View(countryList);
+        }
+
+        private List<Country> GetAllCountries()
+        {
             var contentRoot = _env.ContentRootFileProvider;
             var countriesFi = contentRoot.GetFileInfo("Data/countries.json");
             var countriesStream = countriesFi.CreateReadStream();
             var countries = new StreamReader(countriesStream).ReadToEnd();
 
             var countryList = JsonConvert.DeserializeObject<List<Country>>(countries);
-
-            //return new ObjectResult(countryList);
-
-            return View(countryList);
+            return countryList;
         }
 
         [HttpGet]
@@ -41,12 +47,13 @@ namespace world.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string country)
+        public IActionResult Index(string name)
         {
-            return View();
+            var countries = GetAllCountries();
+            var country = countries.FirstOrDefault(c => string.Equals(c.Name, name, StringComparison.CurrentCultureIgnoreCase));
+            return View(country);
         }
 
-        // india/map
         public IActionResult Map(string country)
         {
             throw new NotImplementedException();
