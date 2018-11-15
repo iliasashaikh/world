@@ -43,6 +43,8 @@ namespace world.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var countries = GetAllCountries();
+            Country.CountryNames = countries.Select(c => c.Name).ToList();
             return View();
         }
 
@@ -51,6 +53,7 @@ namespace world.Controllers
         {
             var countries = GetAllCountries();
             var country = countries.FirstOrDefault(c => string.Equals(c.Name, name, StringComparison.CurrentCultureIgnoreCase));
+            Country.CountryNames = countries.Select(c => c.Name).ToList();
             return View(country);
         }
 
